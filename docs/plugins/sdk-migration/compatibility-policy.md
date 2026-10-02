@@ -296,12 +296,16 @@ while those migrations remain unverified; their original dates are unchanged.
 | `plugin-sdk-provider-owned-helper-shims`          | Provider-local auth/model/replay/OAuth/stream APIs                | Every enumerated helper is migrated in official providers and absent from published plugins.                         |
 | `message-presentation-legacy-bridges`             | `MessagePresentation` and channel presentation renderers          | Producers and official channel packages no longer emit or read legacy interactive replies.                           |
 | `plugin-sdk-focused-compat-aliases`               | The focused replacement named by each `@deprecated` annotation    | Every enumerated alias has zero bundled and published readers.                                                       |
-| `agent-harness-terminal-result-aliases`           | `AgentHarnessAttemptResult.terminal` and `visibleReplies`         | Harness plugins no longer read legacy terminal booleans or `sourceVisibleReplies`.                                   |
+| `agent-harness-terminal-result-aliases`           | `AgentHarnessAttemptResult.terminal`                              | Published harness plugins no longer return legacy terminal fields.                                                   |
 | `official-plugin-export-aliases`                  | Presentation renderers and host-owned Discord timeout behavior    | Minimum supported official plugin packages no longer import the aliases.                                             |
 | `memory-host-compatibility-aliases`               | Canonical memory cache/FTS tables                                 | Supported artifacts no longer pass table overrides, and legacy table data remains preserved.                         |
 | `plugin-runtime-api-compat-aliases`               | Namespaced plugin APIs and focused runtime methods                | All enumerated flat API/runtime aliases have no readers.                                                             |
 | `plugin-provider-manifest-compat-aliases`         | Manifest-owned kind/setup metadata and model catalog registration | Providers no longer publish runtime kind or legacy catalog hooks.                                                    |
 | `agent-harness-credential-prompt-string-argument` | Options object `{ controlToolsAvailable }`                        | Deprecated and warnings start 2026-09-09; supported through 2026-11-30. Remove after that date once callers migrate. |
+
+The `sourceVisibleReplies` harness delivery-default alias has been removed;
+use [`deliveryDefaults.visibleReplies`](/plugins/sdk-agent-harness/sessions-and-results#harness-delivery-defaults).
+The terminal-result aliases retain their separate published-reader condition.
 
 The unused private memory-host `loadConfig` re-exports have been removed.
 Memory implementations use `getRuntimeConfig` or caller-provided config;
