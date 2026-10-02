@@ -320,6 +320,29 @@ while those migrations remain unverified; their original dates are unchanged.
 | `plugin-provider-manifest-compat-aliases`         | Manifest-owned kind/setup metadata and model catalog registration | Providers no longer publish runtime kind or legacy catalog hooks.                                                    |
 | `agent-harness-credential-prompt-string-argument` | Options object `{ controlToolsAvailable }`                        | Deprecated and warnings start 2026-09-09; supported through 2026-11-30. Remove after that date once callers migrate. |
 
+The deprecated stream and replay hook constants have been removed. Construct
+the same hooks with `buildProviderStreamFamilyHooks` from `provider-stream-family`
+or `buildProviderReplayFamilyHooks` from `provider-model-shared`:
+
+| Removed constant                   | Constructor argument                      |
+| ---------------------------------- | ----------------------------------------- |
+| `GOOGLE_THINKING_STREAM_HOOKS`     | `"google-thinking"`                       |
+| `KILOCODE_THINKING_STREAM_HOOKS`   | `"kilocode-thinking"`                     |
+| `MINIMAX_FAST_MODE_STREAM_HOOKS`   | `"minimax-fast-mode"`                     |
+| `MOONSHOT_THINKING_STREAM_HOOKS`   | `"moonshot-thinking"`                     |
+| `OPENAI_RESPONSES_STREAM_HOOKS`    | `"openai-responses-defaults"`             |
+| `OPENROUTER_THINKING_STREAM_HOOKS` | `"openrouter-thinking"`                   |
+| `TOOL_STREAM_DEFAULT_ON_HOOKS`     | `"tool-stream-default-on"`                |
+| `ANTHROPIC_BY_MODEL_REPLAY_HOOKS`  | `{ family: "anthropic-by-model" }`        |
+| `NATIVE_ANTHROPIC_REPLAY_HOOKS`    | `{ family: "native-anthropic-by-model" }` |
+| `OPENAI_COMPATIBLE_REPLAY_HOOKS`   | `{ family: "openai-compatible" }`         |
+| `PASSTHROUGH_GEMINI_REPLAY_HOOKS`  | `{ family: "passthrough-gemini" }`        |
+
+The stream constants are removed from both `provider-stream` and
+`provider-stream-family`. Update plugins that import them before updating the
+host. The constructors retain their existing behavior; this removal does not
+change stored config, credentials, or session data.
+
 The unused private memory-host `loadConfig` re-exports have been removed.
 Memory implementations use `getRuntimeConfig` or caller-provided config;
 custom-table migration behavior remains intact.
