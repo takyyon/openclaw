@@ -51,9 +51,8 @@ function expectUnreachableGatewayTransportFailure(
     });
     return;
   }
-  expect(result.stderr).toContain("Gateway not reachable");
-  expect(result.stderr).toContain(UNREACHABLE_GATEWAY_URL);
-  expect(result.stderr).not.toContain("gateway timeout");
+  expect(result.stderr).toContain("Couldn't connect to OpenClaw.");
+  expect(result.stderr).toContain("openclaw gateway status");
 }
 
 // Custody is an ordering/integrity contract, not a two-second handshake SLO.
