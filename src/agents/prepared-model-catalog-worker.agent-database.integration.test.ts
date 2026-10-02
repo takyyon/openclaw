@@ -13,7 +13,10 @@ import { PROVIDER_ID } from "./prepared-model-catalog-worker.test-support.js";
 import { loadPreparedModelRuntimeAuth } from "./prepared-model-runtime-auth.js";
 import { retirePreparedModelRuntimeAgent } from "./prepared-model-runtime.js";
 import { createCatalogFleetFixture } from "./test-helpers/prepared-model-catalog-fleet-fixture.js";
-import { usePreparedCatalogWorkerFixtures } from "./test-helpers/prepared-model-catalog-worker-fixture.js";
+import {
+  loadCompletedFullCatalog,
+  usePreparedCatalogWorkerFixtures,
+} from "./test-helpers/prepared-model-catalog-worker-fixture.js";
 
 const { makeTempDir } = usePreparedCatalogWorkerFixtures();
 const createFleetFixture = createCatalogFleetFixture(makeTempDir);
@@ -40,6 +43,7 @@ describe("Gateway catalog worker agent database readers", () => {
     };
     try {
       const fixture = await createFleetFixture(() => workerChannel.subscribe(recordWorker));
+      await Promise.all(fixture.snapshots.map((snapshot) => loadCompletedFullCatalog(snapshot)));
       await Promise.all(
         fixture.snapshots.map((snapshot) =>
           loadPreparedModelRuntimeAuth(snapshot, { providerIds: [PROVIDER_ID] }),
